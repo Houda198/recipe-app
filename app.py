@@ -18,7 +18,6 @@ def cached_ranking(query, data):
     return rank_best_recipes(query, data)
 
 st.set_page_config(page_title="Maison SLIMANI", page_icon="🍳")
-st.title(" Maison SLIMANI")
 
 
 # --- DESIGN HAUTE COUTURE (CSS) ---
