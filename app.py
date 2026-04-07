@@ -1,0 +1,256 @@
+import streamlit as st
+import time
+
+# Modules personnalisés
+from search_engine import get_automated_context
+from brain import rank_best_recipes
+from model import generate_recipe_stream
+from database_country_dishes import CUISINES, COUNTRY_SPECIFIC_KEYWORDS
+from Ingredients import INGREDIENTS, ALLERGIES_LIST
+
+# --- OPTIMISATION CACHE ---
+@st.cache_data(show_spinner=False)
+def cached_search(query):
+    return get_automated_context(query)
+
+@st.cache_data(show_spinner=False)
+def cached_ranking(query, data):
+    return rank_best_recipes(query, data)
+
+# Configuration de la page
+st.set_page_config(page_title="Maison SLIMANI", page_icon="👨‍🍳", layout="centered")
+
+# --- DESIGN HAUTE COUTURE (CSS) ---
+st.markdown("""
+    <style>
+    .stApp { background-color: #FFFFFF; }
+    .block-container { padding-top: 1rem; }
+    .signature-title { font-family: 'serif'; color: #1a1a1a; text-align: center; font-size: 2.8rem; font-weight: 800; letter-spacing: -1px; }
+    .subtitle { text-align: center; color: #D4AF37; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 40px; }
+    [data-testid="stSidebar"] { background-color: #1c1c1c !important; border-right: 1px solid #D4AF37; }
+    .sidebar-logo-container { text-align: center; margin-top: 40px; margin-bottom: 50px; }
+    .sidebar-logo { display: inline-block; color: #D4AF37; font-size: 1.8rem; font-weight: bold; padding: 15px 30px; border: 2px solid #D4AF37; background-color: #121212; letter-spacing: 2px; }
+    [data-testid="stSidebar"] label p { color: #f5f5f5 !important; }
+    div.stRadio > div[role="radiogroup"] > label > div:first-child { border: 2px solid #D4AF37 !important; background-color: transparent !important; }
+    div.stRadio > div[role="radiogroup"] > label[data-checked="true"] > div:first-child > div { background-color: #D4AF37 !important; }
+    h3 { color: #1a1a1a; font-size: 1rem !important; border-left: 4px solid #D4AF37; padding-left: 15px; background: #fdfbf7; padding-top: 5px; padding-bottom: 5px; margin-top: 25px !important; }
+    div.stButton > button { background: linear-gradient(145deg, #1e1e1e, #333333); color: #D4AF37 !important; border: 1px solid #D4AF37; width: 100%; height: 4em; font-weight: bold; letter-spacing: 2px; border-radius: 0; transition: 0.3s; }
+    div.stButton > button:hover { border: 1px solid #FFFFFF; color: #FFFFFF !important; transform: scale(1.02); }
+    .prestige-signature { color: #1a1a1a; font-weight: bold; font-size: 1.1rem; margin-top: 40px; letter-spacing: 1px; border-top: 2px solid #D4AF37; padding-top: 25px; text-align: center; font-family: 'serif'; }
+    .prestige-sep { color: #D4AF37; margin: 0 10px; }
+    #MainMenu, header, footer {visibility: hidden;}
+    </style>
+    """, unsafe_allow_html=True)
+
+# --- DICTIONNAIRES DE TRADUCTION ---
+FILTER_LABELS = {
+    "Français": {
+        "prot": "Protéines & Viandes", "fec": "Bases & Féculents", "leg": "Légumes Spécifiques", 
+        "herb": "Herbes Fraîches", "epi": "Épices du Monde", "aut": "Produits Laitiers & fruits secs",
+        "sauce": "Sauces & Condiments", "fruit": "Fruits du Verger",
+        "world": "Cuisine du Monde", "serv": "Type de Service", "all": "Allergies à exclure", 
+        "wish": "Note particulière pour le Chef", "place": "Ex: Texture fondante...", 
+        "serv_list": ["Entrée", "Plat Principal", "Dessert"]
+    },
+    "English": {
+        "prot": "Protein", "fec": "Starch", "leg": "Vegetables", 
+        "herb": "Herbs", "epi": "Spices", "aut": "Others", 
+        "sauce": "Sauces", "fruit": "Fruits",
+        "world": "World Cuisine", "serv": "Service Type", "all": "Allergies to exclude", 
+        "wish": "Special note for the Chef", "place": "Ex: Melting texture...", 
+        "serv_list": ["Appetizer", "Main Course", "Dessert"]
+    }
+}
+
+TRANS = {
+    "Français": {
+        "main_title": "Maison SLIMANI", "sub": "Haute Gastronomie Numérique",
+        "btn": "DÉCOUVRIR LA CRÉATION", "status": "Le Chef compose votre menu...",
+        "sec_ing": "Sélection du Marché", "caption": "Conçu & Développé par Houda SLIMANI",
+        "time": "Temps", "ing_title": "Ingrédients", "inst_title": "Instructions", "pres_title": "Présentation",
+        "copy_btn": " Copier la recette",
+        "step1": "La Mise en place et Bases Maison",
+        "step2": "Le Coeur du Plat",
+        "step3": "L'Accompagnement",
+        "step4": "Le Jus de Cuisine",
+        "step5": "Le Dressage Signature"
+    },
+    "English": {
+        "main_title": "Maison SLIMANI", "sub": "Digital Fine Dining",
+        "btn": "DISCOVER THE CREATION", "status": "Chef is composing your menu...",
+        "sec_ing": "Market Selection", "caption": "Designed & Developed by Houda SLIMANI",
+        "time": "Time", "ing_title": "Ingredients", "inst_title": "Instructions", "pres_title": "Presentation",
+        "copy_btn": "📋 Copy the recipe",
+        "step1": "Mise en place & Home-made Bases",
+        "step2": "The Heart of the Dish",
+        "step3": "The Side & Garnish",
+        "step4": "The Culinary Jus",
+        "step5": "The Signature Plating"
+    }
+}
+
+# --- SIDEBAR ---
+with st.sidebar:
+    if 'current_lang' not in st.session_state: 
+        st.session_state.current_lang = "Français"
+    
+    lang_titles = {"Français": "SÉLECTION LANGUE", "English": "LANGUAGE SELECTION"}
+    
+    langue = st.radio(lang_titles[st.session_state.current_lang], ["Français", "English"], 
+                      index=["Français", "English"].index(st.session_state.current_lang))
+    st.session_state.current_lang = langue
+    t = TRANS[langue]
+    fl = FILTER_LABELS[langue]
+
+    st.markdown("<br>" * 12, unsafe_allow_html=True) 
+    
+    st.markdown("<div class='sidebar-logo-container'><div class='sidebar-logo'>M.S</div></div>", unsafe_allow_html=True)
+    
+    st.markdown(f"""
+        <p style='font-size:0.8rem; text-align:center; color:#bfbfbf; opacity:0.8; font-weight:normal; letter-spacing:0.5px; line-height:1.2; padding:0 10px;'>
+            {t['caption']}
+        </p>
+        """, unsafe_allow_html=True)
+
+# --- TITRES D'ACCUEIL ---
+st.markdown(f"<div class='signature-title'>{t['main_title']}</div>", unsafe_allow_html=True)
+st.markdown(f"<div class='subtitle'>{t['sub']}</div>", unsafe_allow_html=True)
+
+# --- FORMULAIRE ---
+st.subheader(t["sec_ing"])
+c1, c2, c3, c4 = st.columns(4)
+with c1:
+    proteine = st.selectbox(fl["prot"], INGREDIENTS[langue].get(fl["prot"], ["Error"]))
+    feculent = st.selectbox(fl["fec"], INGREDIENTS[langue].get(fl["fec"], ["Error"]))
+with c2:
+    legumes = st.multiselect(fl["leg"], INGREDIENTS[langue].get(fl["leg"], []))
+    herbes = st.multiselect(fl["herb"], INGREDIENTS[langue].get(fl["herb"], []))
+with c3:
+    epices = st.multiselect(fl["epi"], INGREDIENTS[langue].get(fl["epi"], []))
+    autres = st.multiselect(fl["aut"], INGREDIENTS[langue].get(fl["aut"], []))
+with c4:
+    sauces = st.multiselect(fl["sauce"], INGREDIENTS[langue].get(fl["sauce"], []))
+    fruits = st.multiselect(fl["fruit"], INGREDIENTS[langue].get(fl["fruit"], []))
+
+w1, w2 = st.columns(2)
+with w1: cuisine_choisie = st.selectbox(fl["world"], CUISINES[langue])
+with w2: type_plat = st.selectbox(fl["serv"], fl["serv_list"])
+
+allergies = st.multiselect(fl["all"], ALLERGIES_LIST[langue])
+user_wish = st.text_input(fl["wish"], placeholder=fl["place"])
+
+# --- GÉNÉRATION ---
+if st.button(t["btn"]):
+    t_start = time.time()
+    with st.status(t["status"]) as status:
+        
+        def clean_list(l): return ", ".join(l) if l else "Aucun"
+        cultural_hint = COUNTRY_SPECIFIC_KEYWORDS.get(cuisine_choisie, "")
+
+        # ✅ DÉTECTION DU DOMAINE (CUISINE vs PÂTISSERIE)
+        is_dessert = type_plat in ["Dessert", "تحلية"]
+        
+        # ✅ PROMPT GÉNÉRATEUR ADAPTÉ POUR AUTONOMIE TOTALE
+        if is_dessert:
+            domain_rules = f"""
+            RÈGLES D'OR DU CHEF PÂTISSIER SLIMANI :
+            1. TOUT EST FAIT MAISON : Si le plat nécessite une pâte (feuilletée, brisée, sablée), une crème ou un insert, donne impérativement la méthode de fabrication complète de cette base. Interdiction de dire "utiliser une pâte du commerce".
+            2. INTERDICTION FORMELLE : Pas d'huile d'olive, pas d'ail, pas d'oignons. On utilise du beurre AOP, de la crème, des gousses de vanille.
+            3. TECHNIQUE DE PÂTISSERIE : Parle de tempérage, de foisonnement, de sablage, de caramélisation à sec, d'infusion à froid.
+            4. PRÉCISION : Les quantités doivent être millimétrées (grammages précis).
+            """
+            structure_steps = f"""
+            1. **{t['step1']}** : (Méthode complète pour fabriquer la pâte ou l'appareil de base)
+            2. **{t['step2']}** : (Création de la crème, mousse ou ganache technique)
+            3. **{t['step3']}** : (Assemblage technique et maîtrise des températures)
+            4. **{t['step4']}** : (Finition, glaçage ou décor au cornet)
+            5. **{t['step5']}** : (Présentation moderne et épurée)
+            """
+        else:
+            domain_rules = f"""
+            RÈGLES D'OR DU CHEF DE CUISINE SLIMANI :
+            1. BASES AROMATIQUES OBLIGATOIRES : Utilise impérativement ail, échalotes, oignons, mirepoix, herbes pour construire le jus.
+            2. TOUT EST FAIT MAISON : Si le plat nécessite une pâte (ex: Vol-au-vent) ou un fond (veau, volaille), donne la méthode de fabrication complète.
+            3. TECHNIQUE SALÉE : Parle de réaction de Maillard, déglaçage au vin ou vinaigre, réduction, montage au beurre, repos de la viande.
+            4. ACCOMPAGNEMENT : Propose une garniture complète (légumes glacés, purées soyeuses, céréales).
+            """
+            structure_steps = f"""
+            1. **{t['step1']}** : (Préparation des légumes ET méthode pour le fond ou la pâte maison)
+            2. **{t['step2']}** : (Cuisson technique de la protéine principale)
+            3. **{t['step3']}** : (Préparation de la garniture associée)
+            4. **{t['step4']}** : (Déglaçage et réduction des sucs pour un jus court)
+            5. **{t['step5']}** : (Présentation digne d'une étoile Michelin)
+            """
+
+        query = f"""
+        En tant que Chef Exécutif de la Maison SLIMANI, crée une recette de HAUTE GASTRONOMIE REELLE de A à Z pour un(e) {type_plat}.
+        CULTURE : {cuisine_choisie} ({cultural_hint}).
+        
+        {domain_rules}
+        
+        PANIER D'INGRÉDIENTS :
+        - Protéine : {proteine} | Féculent : {feculent}
+        - Fruits : {clean_list(fruits)} | Légumes : {clean_list(legumes)}
+        - Aromates/Condiments : {clean_list(herbes)}, {clean_list(epices)}, {clean_list(sauces)}
+        
+        ⚠️ ALLERGIES (INTERDIT) : {clean_list(allergies)}
+        Note spéciale du client : {user_wish}
+        """
+
+        system_prompt = f"""
+        Tu es le Chef Exécutif de la Maison SLIMANI. Ton style est celui d'un expert passionné qui ne triche jamais sur les bases.
+        - Langue : {langue} EXCLUSIVEMENT.
+        - Ton : Technique, précis, luxueux. Utilise le vocabulaire de métier approprié.
+        - RÈGLE CRITIQUE : Ne suggère JAMAIS d'ingrédients préparés. Si tu mentionnes une pâte feuilletée, tu DOIS expliquer comment la faire (détrempe et tourage). Si c'est un fond de veau, explique la torréfaction des os.
+        - Structure de la réponse :
+        
+        # **[NOM DU PLAT GASTRONOMIQUE]**
+        ### **{t['pres_title']}**
+        (Vision du Chef sur le mariage des saveurs et l'intention culinaire.)
+        
+        ### **{t['time']}**
+        {"* **Preparation:** XX min | **Cooking:** XX min" if langue == "English" else 
+         "* **Préparation :** XX min | **Cuisson :** XX min"}
+        
+        ### **{t['ing_title']}**
+        (Liste exhaustive incluant TOUS les ingrédients pour les bases maison.)
+        
+        ### **{t['inst_title']}**
+        {structure_steps}
+        """
+
+        raw_web_data = cached_search(query)
+        context_refined = cached_ranking(query, raw_web_data)
+        
+        vitesse = round(time.time() - t_start, 2)
+        status.update(label=f"Création prête en {vitesse}s", state="complete")
+
+    st.markdown("---")
+    placeholder = st.empty()
+    full_recipe = ""
+    
+    for chunk in generate_recipe_stream(query, system_prompt=system_prompt):
+        full_recipe += chunk
+        placeholder.markdown(full_recipe + "▌")
+    
+    sig_html = f"<div class='prestige-signature'>MAISON SLIMANI <span class='prestige-sep'>|</span> L'Excellence Culinaire par Houda Slimani</div>"
+    placeholder.markdown(f"{full_recipe}\n\n{sig_html}", unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # ✅ COPIE DISCRÈTE (Traduit automatiquement)
+    with st.expander(t['copy_btn']):
+        st.code(full_recipe, language=None)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    with st.expander("🔍 Architecture & Intelligence System"):
+        st.markdown(f"""
+        **Spécifications du Système**
+        * **Modèle** : Gemini 3 Flash (LLM Haute Performance)
+        * **Vitesse d'inférence** : `{vitesse}s`
+        * **Orchestration** : Python Framework By Houda Slimani
+        """)
+
+# --- SIGNATURE FINALE ---
+st.markdown("<br><center><small style='color:#ccc;'>Maison SLIMANI © 2026</small></center>", unsafe_allow_html=True)
