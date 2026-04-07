@@ -18,13 +18,13 @@ def cached_ranking(query, data):
     return rank_best_recipes(query, data)
 
 st.set_page_config(page_title="Flavor-Flow", page_icon="🍳")
-st.title("🌊 Flavor-Flow")
+st.title(" Flavor-Flow")
 st.subheader("L'intelligence artificielle au service de vos papilles")
 
 # --- DESIGN HAUTE COUTURE (CSS) ---
 st.markdown("""
     <style>
-    .stApp { background-color: #FFFFFF; }
+    .stApp { background-color: #1a1a1a; }
     .block-container { padding-top: 1rem; }
     .signature-title { font-family: 'serif'; color: #1a1a1a; text-align: center; font-size: 2.8rem; font-weight: 800; letter-spacing: -1px; }
     .subtitle { text-align: center; color: #D4AF37; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 40px; }
