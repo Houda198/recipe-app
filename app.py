@@ -249,7 +249,7 @@ if st.button(t["btn"]):
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    with st.expander("🔍 Architecture & Intelligence System"):
+    with st.expander(" Architecture & Intelligence System"):
         st.markdown(f"""
         **Spécifications du Système**
         * **Modèle** : Gemini 3 Flash (LLM Haute Performance)
