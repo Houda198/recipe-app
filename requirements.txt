@@ -4,3 +4,4 @@ python-dotenv
 sentence_transformers
 beautifulsoup4
 requests
+duckduckgo_search
