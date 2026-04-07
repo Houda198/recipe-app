@@ -40,7 +40,7 @@ st.markdown("""
     
     div.stButton > button { background: linear-gradient(145deg, #1e1e1e, #333333); color: #D4AF37 !important; border: 1px solid #D4AF37; width: 100%; height: 4em; font-weight: bold; letter-spacing: 2px; border-radius: 0; transition: 0.3s; }
     div.stButton > button:hover { border: 1px solid #FFFFFF; color: #FFFFFF !important; transform: scale(1.02); }
-    .prestige-signature { color: #1a1a1a; font-weight: bold; font-size: 1.1rem; margin-top: 40px; letter-spacing: 1px; border-top: 2px solid #D4AF37; padding-top: 25px; text-align: center; font-family: 'serif'; }
+    .prestige-signature { color: #FFFFFF !important; font-weight: bold; font-size: 1.1rem; margin-top: 40px; letter-spacing: 1px; border-top: 2px solid #D4AF37; padding-top: 25px; text-align: center; font-family: 'serif'; }
     .prestige-sep { color: #D4AF37; margin: 0 10px; }
     #MainMenu, header, footer {visibility: hidden;}
 
