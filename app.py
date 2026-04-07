@@ -26,8 +26,29 @@ st.markdown("""
     <style>
     .stApp { background-color: #1a1a1a; }
     .block-container { padding-top: 1rem; }
-    .signature-title { font-family: 'serif'; color: #1a1a1a; text-align: center; font-size: 2.8rem; font-weight: 800; letter-spacing: -1px; }
-    .subtitle { text-align: center; color: #D4AF37; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 40px; }
+    
+    /* 1. TITRE MAISON SLIMANI : Centré et Blanc */
+    .signature-title { 
+        font-family: 'serif'; 
+        color: #FFFFFF !important; 
+        text-align: center; 
+        font-size: 2.8rem; 
+        font-weight: 800; 
+        letter-spacing: -1px; 
+        margin-bottom: 0px;
+    }
+    
+    /* 2. SOUS-TITRE : Déjà centré, mais on s'assure de l'alignement */
+    .subtitle { 
+        text-align: center; 
+        color: #D4AF37; 
+        font-size: 0.9rem; 
+        letter-spacing: 4px; 
+        text-transform: uppercase; 
+        margin-bottom: 40px; 
+        width: 100%;
+    }
+
     [data-testid="stSidebar"] { background-color: #1c1c1c !important; border-right: 1px solid #D4AF37; }
     .sidebar-logo-container { text-align: center; margin-top: 40px; margin-bottom: 50px; }
     .sidebar-logo { display: inline-block; color: #D4AF37; font-size: 1.8rem; font-weight: bold; padding: 15px 30px; border: 2px solid #D4AF37; background-color: #121212; letter-spacing: 2px; }
@@ -35,17 +56,24 @@ st.markdown("""
     div.stRadio > div[role="radiogroup"] > label > div:first-child { border: 2px solid #D4AF37 !important; background-color: transparent !important; }
     div.stRadio > div[role="radiogroup"] > label[data-checked="true"] > div:first-child > div { background-color: #D4AF37 !important; }
     
-    /* MODIFICATION ICI : h3 passe en NOIR pour être lisible sur le fond fdfbf7 */
     h3 { color: #1a1a1a !important; font-size: 1rem !important; border-left: 4px solid #D4AF37; padding-left: 15px; background: #fdfbf7; padding-top: 5px; padding-bottom: 5px; margin-top: 25px !important; }
     
     div.stButton > button { background: linear-gradient(145deg, #1e1e1e, #333333); color: #D4AF37 !important; border: 1px solid #D4AF37; width: 100%; height: 4em; font-weight: bold; letter-spacing: 2px; border-radius: 0; transition: 0.3s; }
     div.stButton > button:hover { border: 1px solid #FFFFFF; color: #FFFFFF !important; transform: scale(1.02); }
+    
     .prestige-signature { color: #FFFFFF !important; font-weight: bold; font-size: 1.1rem; margin-top: 40px; letter-spacing: 1px; border-top: 2px solid #D4AF37; padding-top: 25px; text-align: center; font-family: 'serif'; }
     .prestige-sep { color: #D4AF37; margin: 0 10px; }
     #MainMenu, header, footer {visibility: hidden;}
 
-    /* AJOUT ICI : Ta signature blanche pour la sidebar */
-    .user-signature { color: #FFFFFF !important; font-size: 0.75rem; text-align: center; margin-top: 50px; opacity: 0.8; }
+    /* 3. SIGNATURE SIDEBAR : Une seule ligne, taille 0.8 */
+    .user-signature { 
+        color: #FFFFFF !important; 
+        font-size: 0.8rem; 
+        text-align: center; 
+        margin-top: 50px; 
+        opacity: 0.8; 
+        white-space: nowrap; /* Empêche de revenir à la ligne */
+    }
     </style>
     """, unsafe_allow_html=True)
 
