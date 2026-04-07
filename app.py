@@ -34,14 +34,21 @@ st.markdown("""
     [data-testid="stSidebar"] label p { color: #f5f5f5 !important; }
     div.stRadio > div[role="radiogroup"] > label > div:first-child { border: 2px solid #D4AF37 !important; background-color: transparent !important; }
     div.stRadio > div[role="radiogroup"] > label[data-checked="true"] > div:first-child > div { background-color: #D4AF37 !important; }
-    h3 { color: #1a1a1a; font-size: 1rem !important; border-left: 4px solid #D4AF37; padding-left: 15px; background: #fdfbf7; padding-top: 5px; padding-bottom: 5px; margin-top: 25px !important; }
+    
+    /* MODIFICATION ICI : h3 passe en NOIR pour être lisible sur le fond fdfbf7 */
+    h3 { color: #1a1a1a !important; font-size: 1rem !important; border-left: 4px solid #D4AF37; padding-left: 15px; background: #fdfbf7; padding-top: 5px; padding-bottom: 5px; margin-top: 25px !important; }
+    
     div.stButton > button { background: linear-gradient(145deg, #1e1e1e, #333333); color: #D4AF37 !important; border: 1px solid #D4AF37; width: 100%; height: 4em; font-weight: bold; letter-spacing: 2px; border-radius: 0; transition: 0.3s; }
     div.stButton > button:hover { border: 1px solid #FFFFFF; color: #FFFFFF !important; transform: scale(1.02); }
     .prestige-signature { color: #1a1a1a; font-weight: bold; font-size: 1.1rem; margin-top: 40px; letter-spacing: 1px; border-top: 2px solid #D4AF37; padding-top: 25px; text-align: center; font-family: 'serif'; }
     .prestige-sep { color: #D4AF37; margin: 0 10px; }
     #MainMenu, header, footer {visibility: hidden;}
+
+    /* AJOUT ICI : Ta signature blanche pour la sidebar */
+    .user-signature { color: #FFFFFF !important; font-size: 0.75rem; text-align: center; margin-top: 50px; opacity: 0.8; }
     </style>
     """, unsafe_allow_html=True)
+
 
 # --- DICTIONNAIRES DE TRADUCTION ---
 FILTER_LABELS = {
@@ -81,7 +88,7 @@ TRANS = {
         "btn": "DISCOVER THE CREATION", "status": "Chef is composing your menu...",
         "sec_ing": "Market Selection", "caption": "Designed & Developed by Houda SLIMANI",
         "time": "Time", "ing_title": "Ingredients", "inst_title": "Instructions", "pres_title": "Presentation",
-        "copy_btn": "📋 Copy the recipe",
+        "copy_btn": " Copy the recipe",
         "step1": "Mise en place & Home-made Bases",
         "step2": "The Heart of the Dish",
         "step3": "The Side & Garnish",
@@ -107,11 +114,8 @@ with st.sidebar:
     
     st.markdown("<div class='sidebar-logo-container'><div class='sidebar-logo'>M.S</div></div>", unsafe_allow_html=True)
     
-    st.markdown(f"""
-        <p style='font-size:0.8rem; text-align:center; color:#bfbfbf; opacity:0.8; font-weight:normal; letter-spacing:0.5px; line-height:1.2; padding:0 10px;'>
-            {t['caption']}
-        </p>
-        """, unsafe_allow_html=True)
+    # AJOUT DE TA SIGNATURE ICI DANS LA SIDEBAR
+    st.sidebar.markdown('<p class="user-signature">Conçu & Développé par Houda SLIMANI</p>', unsafe_allow_html=True)
 
 # --- TITRES D'ACCUEIL ---
 st.markdown(f"<div class='signature-title'>{t['main_title']}</div>", unsafe_allow_html=True)
@@ -148,10 +152,10 @@ if st.button(t["btn"]):
         def clean_list(l): return ", ".join(l) if l else "Aucun"
         cultural_hint = COUNTRY_SPECIFIC_KEYWORDS.get(cuisine_choisie, "")
 
-        # ✅ DÉTECTION DU DOMAINE (CUISINE vs PÂTISSERIE)
+        #  DÉTECTION DU DOMAINE (CUISINE vs PÂTISSERIE)
         is_dessert = type_plat in ["Dessert", "تحلية"]
         
-        # ✅ PROMPT GÉNÉRATEUR ADAPTÉ POUR AUTONOMIE TOTALE
+        #  PROMPT GÉNÉRATEUR ADAPTÉ POUR AUTONOMIE TOTALE
         if is_dessert:
             domain_rules = f"""
             RÈGLES D'OR DU CHEF PÂTISSIER SLIMANI :
@@ -194,7 +198,7 @@ if st.button(t["btn"]):
         - Fruits : {clean_list(fruits)} | Légumes : {clean_list(legumes)}
         - Aromates/Condiments : {clean_list(herbes)}, {clean_list(epices)}, {clean_list(sauces)}
         
-        ⚠️ ALLERGIES (INTERDIT) : {clean_list(allergies)}
+        ALLERGIES (INTERDIT) : {clean_list(allergies)}
         Note spéciale du client : {user_wish}
         """
 
@@ -239,7 +243,7 @@ if st.button(t["btn"]):
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # ✅ COPIE DISCRÈTE (Traduit automatiquement)
+    #  COPIE DISCRÈTE (Traduit automatiquement)
     with st.expander(t['copy_btn']):
         st.code(full_recipe, language=None)
 
