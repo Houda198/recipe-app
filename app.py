@@ -17,8 +17,9 @@ def cached_search(query):
 def cached_ranking(query, data):
     return rank_best_recipes(query, data)
 
-# Configuration de la page
-st.set_page_config(page_title="Maison SLIMANI", page_icon="👨‍🍳", layout="centered")
+st.set_page_config(page_title="Flavor-Flow", page_icon="🍳")
+st.title("🌊 Flavor-Flow")
+st.subheader("L'intelligence artificielle au service de vos papilles")
 
 # --- DESIGN HAUTE COUTURE (CSS) ---
 st.markdown("""
