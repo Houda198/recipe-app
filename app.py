@@ -25,7 +25,6 @@ st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;500;600;700&display=swap');
  
-    /* FOND PRINCIPAL : Ivoire chaud au lieu du noir total */
     .stApp { 
         background-color: #F5F0E8;
         background-image: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
@@ -35,12 +34,10 @@ st.markdown("""
         background-color: #F5F0E8;
     }
  
-    /* Texte du contenu principal en noir pour lisibilité sur fond clair */
     .stMarkdown, .stMarkdown p, .stMarkdown li, .stMarkdown h1, .stMarkdown h2 { 
         color: #1a1a1a !important; 
     }
  
-    /* 1. TITRE MAISON SLIMANI */
     .signature-title { 
         font-family: 'Cinzel', serif; 
         color: #1a1a1a !important; 
@@ -61,21 +58,20 @@ st.markdown("""
         margin: 20px auto 0;
     }
  
-    /* 2. SOUS-TITRE */
+    /* ✅ SOUS-TITRE : plus foncé + gras */
     .subtitle { 
         text-align: center; 
-        color: #D4AF37; 
+        color: #B8922A;
         font-family: 'Cormorant Garamond', serif;
         font-size: 0.95rem; 
         letter-spacing: 6px; 
         text-transform: uppercase; 
         margin-bottom: 50px; 
         width: 100%;
-        font-weight: 400;
-        opacity: 0.9;
+        font-weight: 600;
+        opacity: 1;
     }
  
-    /* SIDEBAR : reste noire */
     [data-testid="stSidebar"] { 
         background: linear-gradient(180deg, #1c1c1c 0%, #141414 100%) !important; 
         border-right: 1px solid rgba(212, 175, 55, 0.3);
@@ -110,6 +106,15 @@ st.markdown("""
         font-size: 1.05rem;
         letter-spacing: 1px;
     }
+
+    /* ✅ LABELS FORMULAIRE PRINCIPAL : noirs sur fond ivoire */
+    .stSelectbox label p,
+    .stMultiSelect label p,
+    .stTextInput label p,
+    [data-testid="stWidgetLabel"] p {
+        color: #1a1a1a !important;
+    }
+
     div.stRadio > div[role="radiogroup"] > label > div:first-child { 
         border: 1px solid rgba(212, 175, 55, 0.5) !important; 
         background-color: transparent !important;
@@ -124,7 +129,6 @@ st.markdown("""
         box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
     }
  
-    /* TITRES DE SECTION h3 */
     h3 { 
         color: #1a1a1a !important; 
         font-family: 'Cinzel', serif;
@@ -140,7 +144,6 @@ st.markdown("""
         box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
     }
  
-    /* BOUTON */
     div.stButton > button { 
         background: linear-gradient(145deg, #1a1a1a, #2a2a2a); 
         color: #D4AF37 !important; 
@@ -175,7 +178,6 @@ st.markdown("""
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(212, 175, 55, 0.15);
     }
  
-    /* SIGNATURE DE FIN */
     .prestige-signature { 
         color: #1a1a1a !important; 
         font-family: 'Cormorant Garamond', serif;
@@ -197,21 +199,23 @@ st.markdown("""
  
     #MainMenu, header, footer { visibility: hidden; }
  
-    /* SIGNATURE SIDEBAR */
+    /* ✅ SIGNATURE SIDEBAR : contenue dans la sidebar, retour à la ligne autorisé */
     .user-signature { 
         color: #FFFFFF !important; 
         font-family: 'Cormorant Garamond', serif;
-        font-size: 0.85rem; 
+        font-size: 0.78rem; 
         text-align: center; 
         margin-top: 60px; 
         opacity: 0.6;
-        letter-spacing: 1px;
-        white-space: nowrap;
+        letter-spacing: 0.5px;
+        white-space: normal;
+        word-break: break-word;
+        padding: 0 15px;
+        display: block;
         transition: opacity 0.3s ease;
     }
     .user-signature:hover { opacity: 0.9; }
  
-    /* Scrollbar personnalisée */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #F5F0E8; }
     ::-webkit-scrollbar-thumb { 
