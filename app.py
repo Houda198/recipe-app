@@ -221,16 +221,16 @@ st.markdown("""
     .user-signature { 
         color: #FFFFFF !important; 
         font-family: 'Cormorant Garamond', serif;
-        font-size: 0.72rem; 
+        font-size: 0.85rem; 
         text-align: center; 
         margin-top: 20px; 
         opacity: 0.6;
         letter-spacing: 0.5px;
         white-space: nowrap;
         word-break: break-word;
-        padding: 0 10px;
+        padding: 0 5px;
         display: block;
-        transform: scale(0.95);
+        transform: scale(0.9);
         transition: opacity 0.3s ease;
     }
     .user-signature:hover { opacity: 0.9; }
