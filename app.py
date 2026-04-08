@@ -282,6 +282,21 @@ st.markdown("""
         background: linear-gradient(180deg, #D4AF37 0%, #a08930 100%);
         border-radius: 3px;
     }
+    .user-signature { 
+    color: #FFFFFF !important; 
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem; 
+    text-align: center; 
+    margin-top: 60px; 
+    opacity: 0.6;
+    letter-spacing: 0.5px;
+    white-space: normal;
+    word-break: break-word;
+    padding: 0 15px;
+    display: block;
+    transition: opacity 0.3s ease;
+    }
+    .user-signature:hover { opacity: 0.9; }
     </style>
     """, unsafe_allow_html=True)
 
