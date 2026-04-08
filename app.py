@@ -70,12 +70,25 @@ st.markdown("""
         font-weight: 600;
         opacity: 1;
     }
- 
+
+    /* ========== SIDEBAR STRUCTURE — flex column to push signature to bottom ========== */
     [data-testid="stSidebar"] { 
         background: linear-gradient(180deg, #1c1c1c 0%, #141414 100%) !important; 
         border-right: 1px solid rgba(212, 175, 55, 0.3);
         box-shadow: 4px 0 30px rgba(0, 0, 0, 0.3);
     }
+    [data-testid="stSidebar"] > div:first-child {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        padding-bottom: 20px;
+    }
+    [data-testid="stSidebar"] [data-testid="stVerticalBlock"] {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
     .sidebar-logo-container { 
         text-align: center; 
         margin-top: 50px; 
@@ -238,24 +251,26 @@ st.markdown("""
         color: #1a1a1a !important;
     }
 
-    /* ========== FIX 3: SIDEBAR SIGNATURE — restored & contained ========== */
+    /* ========== FIX 3: SIDEBAR SIGNATURE — pinned to bottom ========== */
     .user-signature { 
         color: #FFFFFF !important; 
         font-family: 'Cormorant Garamond', serif;
         font-size: 0.78rem; 
         text-align: center; 
-        margin-top: 60px; 
+        margin-top: auto !important;
+        padding: 20px 15px;
         opacity: 0.6;
         letter-spacing: 0.5px;
         white-space: normal;
         word-break: break-word;
         overflow-wrap: break-word;
-        padding: 0 15px;
         display: block;
         width: 100%;
         box-sizing: border-box;
         max-width: 100%;
         transition: opacity 0.3s ease;
+        position: relative;
+        bottom: 0;
     }
     .user-signature:hover { 
         opacity: 0.9; 
