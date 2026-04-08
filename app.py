@@ -70,25 +70,13 @@ st.markdown("""
         font-weight: 600;
         opacity: 1;
     }
-
-    /* ========== SIDEBAR STRUCTURE — flex column to push signature to bottom ========== */
+ 
     [data-testid="stSidebar"] { 
         background: linear-gradient(180deg, #1c1c1c 0%, #141414 100%) !important; 
         border-right: 1px solid rgba(212, 175, 55, 0.3);
         box-shadow: 4px 0 30px rgba(0, 0, 0, 0.3);
     }
-    [data-testid="stSidebar"] > div:first-child {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        padding-bottom: 20px;
-    }
-    [data-testid="stSidebar"] [data-testid="stVerticalBlock"] {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
-
+ 
     .sidebar-logo-container { 
         text-align: center; 
         margin-top: 50px; 
@@ -118,14 +106,14 @@ st.markdown("""
         font-size: 1.05rem;
         letter-spacing: 1px;
     }
-
+ 
     .stSelectbox label p,
     .stMultiSelect label p,
     .stTextInput label p,
     [data-testid="stWidgetLabel"] p {
         color: #1a1a1a !important;
     }
-
+ 
     div.stRadio > div[role="radiogroup"] > label > div:first-child { 
         border: 1px solid rgba(212, 175, 55, 0.5) !important; 
         background-color: transparent !important;
@@ -209,8 +197,7 @@ st.markdown("""
     }
  
     #MainMenu, header, footer { visibility: hidden; }
-
-    /* ========== FIX 1: EXPANDER — dark text on ivory background ========== */
+ 
     [data-testid="stExpander"] {
         background-color: #F5F0E8 !important;
         border: 1px solid rgba(212, 175, 55, 0.3) !important;
@@ -229,52 +216,23 @@ st.markdown("""
         fill: #1a1a1a !important;
         stroke: #1a1a1a !important;
     }
-
-    /* ========== FIX 2: CODE BLOCK — dark text on light beige ========== */
-    [data-testid="stCode"],
-    .stCode,
-    .stCode pre,
-    .stCode code,
-    pre, code,
-    [data-testid="stCode"] pre,
-    [data-testid="stCode"] code {
-        background-color: #ede8de !important;
-        color: #1a1a1a !important;
-    }
-    [data-testid="stCode"] button {
-        background-color: #e8e3d8 !important;
-        color: #1a1a1a !important;
-        border: 1px solid rgba(212, 175, 55, 0.4) !important;
-    }
-    [data-testid="stCode"] button:hover {
-        background-color: #D4AF37 !important;
-        color: #1a1a1a !important;
-    }
-
-    /* ========== FIX 3: SIDEBAR SIGNATURE — pinned to bottom ========== */
+ 
+    /* ✅ SIGNATURE SIDEBAR : version unique, sans doublon */
     .user-signature { 
         color: #FFFFFF !important; 
         font-family: 'Cormorant Garamond', serif;
         font-size: 0.78rem; 
         text-align: center; 
-        margin-top: auto !important;
-        padding: 20px 15px;
+        margin-top: 60px; 
         opacity: 0.6;
         letter-spacing: 0.5px;
         white-space: normal;
         word-break: break-word;
-        overflow-wrap: break-word;
+        padding: 0 15px;
         display: block;
-        width: 100%;
-        box-sizing: border-box;
-        max-width: 100%;
         transition: opacity 0.3s ease;
-        position: relative;
-        bottom: 0;
     }
-    .user-signature:hover { 
-        opacity: 0.9; 
-    }
+    .user-signature:hover { opacity: 0.9; }
  
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #F5F0E8; }
@@ -282,24 +240,8 @@ st.markdown("""
         background: linear-gradient(180deg, #D4AF37 0%, #a08930 100%);
         border-radius: 3px;
     }
-    .user-signature { 
-    color: #FFFFFF !important; 
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.78rem; 
-    text-align: center; 
-    margin-top: 60px; 
-    opacity: 0.6;
-    letter-spacing: 0.5px;
-    white-space: normal;
-    word-break: break-word;
-    padding: 0 15px;
-    display: block;
-    transition: opacity 0.3s ease;
-    }
-    .user-signature:hover { opacity: 0.9; }
     </style>
     """, unsafe_allow_html=True)
-
 
 # --- DICTIONNAIRES DE TRADUCTION ---
 FILTER_LABELS = {
@@ -366,7 +308,7 @@ with st.sidebar:
     st.markdown("<div class='sidebar-logo-container'><div class='sidebar-logo'>M.S</div></div>", unsafe_allow_html=True)
     
     # AJOUT DE TA SIGNATURE ICI DANS LA SIDEBAR
-    st.sidebar.markdown('<p class="user-signature">Conçu & Développé par Houda SLIMANI</p>', unsafe_allow_html=True)
+    st.markdown('<p class="user-signature">Conçu & Développé par Houda SLIMANI</p>', unsafe_allow_html=True)
 
 # --- TITRES D'ACCUEIL ---
 st.markdown(f"<div class='signature-title'>{t['main_title']}</div>", unsafe_allow_html=True)
