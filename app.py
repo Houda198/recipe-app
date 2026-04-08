@@ -23,55 +23,202 @@ st.set_page_config(page_title="Maison SLIMANI", page_icon="🍳")
 # --- DESIGN HAUTE COUTURE (CSS) ---
 st.markdown("""
     <style>
-    .stApp { background-color: #1a1a1a; }
-    .block-container { padding-top: 1rem; }
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;500;600;700&display=swap');
+    
+    .stApp { 
+        background-color: #1a1a1a; 
+        background-image: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.03) 0%, transparent 50%);
+    }
+    .block-container { padding-top: 2rem; }
     
     /* 1. TITRE MAISON SLIMANI : Centré et Blanc */
     .signature-title { 
-        font-family: 'serif'; 
+        font-family: 'Cinzel', serif; 
         color: #FFFFFF !important; 
         text-align: center; 
-        font-size: 2.8rem; 
-        font-weight: 800; 
-        letter-spacing: -1px; 
-        margin-bottom: 0px;
+        font-size: 3.2rem; 
+        font-weight: 500; 
+        letter-spacing: 8px; 
+        margin-bottom: 8px;
+        text-shadow: 0 2px 20px rgba(212, 175, 55, 0.15);
+        position: relative;
+    }
+    .signature-title::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+        margin: 20px auto 0;
     }
     
-    /* 2. SOUS-TITRE : Déjà centré, mais on s'assure de l'alignement */
+    /* 2. SOUS-TITRE : Élégance raffinée */
     .subtitle { 
         text-align: center; 
         color: #D4AF37; 
-        font-size: 0.9rem; 
-        letter-spacing: 4px; 
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 0.95rem; 
+        letter-spacing: 6px; 
         text-transform: uppercase; 
-        margin-bottom: 40px; 
+        margin-bottom: 50px; 
         width: 100%;
+        font-weight: 400;
+        opacity: 0.9;
+        text-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
     }
 
-    [data-testid="stSidebar"] { background-color: #1c1c1c !important; border-right: 1px solid #D4AF37; }
-    .sidebar-logo-container { text-align: center; margin-top: 40px; margin-bottom: 50px; }
-    .sidebar-logo { display: inline-block; color: #D4AF37; font-size: 1.8rem; font-weight: bold; padding: 15px 30px; border: 2px solid #D4AF37; background-color: #121212; letter-spacing: 2px; }
-    [data-testid="stSidebar"] label p { color: #f5f5f5 !important; }
-    div.stRadio > div[role="radiogroup"] > label > div:first-child { border: 2px solid #D4AF37 !important; background-color: transparent !important; }
-    div.stRadio > div[role="radiogroup"] > label[data-checked="true"] > div:first-child > div { background-color: #D4AF37 !important; }
-    
-    h3 { color: #1a1a1a !important; font-size: 1rem !important; border-left: 4px solid #D4AF37; padding-left: 15px; background: #fdfbf7; padding-top: 5px; padding-bottom: 5px; margin-top: 25px !important; }
-    
-    div.stButton > button { background: linear-gradient(145deg, #1e1e1e, #333333); color: #D4AF37 !important; border: 1px solid #D4AF37; width: 100%; height: 4em; font-weight: bold; letter-spacing: 2px; border-radius: 0; transition: 0.3s; }
-    div.stButton > button:hover { border: 1px solid #FFFFFF; color: #FFFFFF !important; transform: scale(1.02); }
-    
-    .prestige-signature { color: #FFFFFF !important; font-weight: bold; font-size: 1.1rem; margin-top: 40px; letter-spacing: 1px; border-top: 2px solid #D4AF37; padding-top: 25px; text-align: center; font-family: 'serif'; }
-    .prestige-sep { color: #D4AF37; margin: 0 10px; }
-    #MainMenu, header, footer {visibility: hidden;}
-
-    /* 3. SIGNATURE SIDEBAR : Une seule ligne, taille 0.8 */
-    .user-signature { 
-        color: #FFFFFF !important; 
-        font-size: 0.8rem; 
+    [data-testid="stSidebar"] { 
+        background: linear-gradient(180deg, #1c1c1c 0%, #141414 100%) !important; 
+        border-right: 1px solid rgba(212, 175, 55, 0.3);
+        box-shadow: 4px 0 30px rgba(0, 0, 0, 0.5);
+    }
+    .sidebar-logo-container { 
         text-align: center; 
         margin-top: 50px; 
-        opacity: 0.8; 
-        white-space: nowrap; /* Empêche de revenir à la ligne */
+        margin-bottom: 60px; 
+    }
+    .sidebar-logo { 
+        display: inline-block; 
+        color: #D4AF37; 
+        font-family: 'Cinzel', serif;
+        font-size: 1.6rem; 
+        font-weight: 500; 
+        padding: 18px 35px; 
+        border: 1px solid rgba(212, 175, 55, 0.6); 
+        background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
+        letter-spacing: 4px;
+        box-shadow: 
+            0 4px 20px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(212, 175, 55, 0.1);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .sidebar-logo:hover {
+        border-color: #D4AF37;
+        box-shadow: 
+            0 8px 40px rgba(212, 175, 55, 0.15),
+            inset 0 1px 0 rgba(212, 175, 55, 0.2);
+        transform: translateY(-2px);
+    }
+    [data-testid="stSidebar"] label p { 
+        color: #f5f5f5 !important; 
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.05rem;
+        letter-spacing: 1px;
+    }
+    div.stRadio > div[role="radiogroup"] > label > div:first-child { 
+        border: 1px solid rgba(212, 175, 55, 0.5) !important; 
+        background-color: transparent !important;
+        transition: all 0.3s ease;
+    }
+    div.stRadio > div[role="radiogroup"] > label:hover > div:first-child { 
+        border-color: #D4AF37 !important;
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+    }
+    div.stRadio > div[role="radiogroup"] > label[data-checked="true"] > div:first-child > div { 
+        background-color: #D4AF37 !important;
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    }
+    
+    h3 { 
+        color: #1a1a1a !important; 
+        font-family: 'Cinzel', serif;
+        font-size: 1rem !important; 
+        font-weight: 500;
+        border-left: 3px solid #D4AF37; 
+        padding-left: 20px; 
+        background: linear-gradient(90deg, #fdfbf7 0%, #f8f6f0 100%); 
+        padding-top: 12px; 
+        padding-bottom: 12px; 
+        margin-top: 30px !important;
+        letter-spacing: 2px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    }
+    
+    div.stButton > button { 
+        background: linear-gradient(145deg, #1a1a1a, #2a2a2a); 
+        color: #D4AF37 !important; 
+        border: 1px solid rgba(212, 175, 55, 0.5); 
+        width: 100%; 
+        height: 4.5em; 
+        font-family: 'Cinzel', serif;
+        font-weight: 500; 
+        font-size: 0.85rem;
+        letter-spacing: 3px; 
+        border-radius: 0; 
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+    div.stButton > button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+        transition: left 0.6s ease;
+    }
+    div.stButton > button:hover::before {
+        left: 100%;
+    }
+    div.stButton > button:hover { 
+        border-color: #D4AF37; 
+        color: #FFFFFF !important; 
+        transform: translateY(-3px);
+        box-shadow: 
+            0 8px 30px rgba(0, 0, 0, 0.4),
+            0 0 20px rgba(212, 175, 55, 0.15);
+    }
+    
+    .prestige-signature { 
+        color: #FFFFFF !important; 
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 500; 
+        font-size: 1.15rem; 
+        font-style: italic;
+        margin-top: 50px; 
+        letter-spacing: 2px; 
+        border-top: 1px solid rgba(212, 175, 55, 0.4); 
+        padding-top: 30px; 
+        text-align: center;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    .prestige-sep { 
+        color: #D4AF37; 
+        margin: 0 15px;
+        font-weight: 300;
+        opacity: 0.8;
+    }
+    #MainMenu, header, footer {visibility: hidden;}
+
+    /* 3. SIGNATURE SIDEBAR : Élégance discrète */
+    .user-signature { 
+        color: #FFFFFF !important; 
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 0.85rem; 
+        text-align: center; 
+        margin-top: 60px; 
+        opacity: 0.6;
+        letter-spacing: 1px;
+        white-space: nowrap;
+        transition: opacity 0.3s ease;
+    }
+    .user-signature:hover {
+        opacity: 0.9;
+    }
+    
+    /* Scrollbar personnalisée */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #1a1a1a;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #D4AF37 0%, #a08930 100%);
+        border-radius: 3px;
     }
     </style>
     """, unsafe_allow_html=True)
