@@ -58,7 +58,6 @@ st.markdown("""
         margin: 20px auto 0;
     }
  
-    /* ✅ SOUS-TITRE : plus foncé + gras */
     .subtitle { 
         text-align: center; 
         color: #B8922A;
@@ -107,7 +106,6 @@ st.markdown("""
         letter-spacing: 1px;
     }
 
-    /* ✅ LABELS FORMULAIRE PRINCIPAL : noirs sur fond ivoire */
     .stSelectbox label p,
     .stMultiSelect label p,
     .stTextInput label p,
@@ -198,8 +196,49 @@ st.markdown("""
     }
  
     #MainMenu, header, footer { visibility: hidden; }
- 
-    /* ✅ SIGNATURE SIDEBAR : contenue dans la sidebar, retour à la ligne autorisé */
+
+    /* ========== FIX 1: EXPANDER — dark text on ivory background ========== */
+    [data-testid="stExpander"] {
+        background-color: #F5F0E8 !important;
+        border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    }
+    [data-testid="stExpander"] summary,
+    [data-testid="stExpander"] summary p,
+    [data-testid="stExpander"] summary span,
+    [data-testid="stExpander"] [data-testid="stMarkdownContainer"],
+    [data-testid="stExpander"] [data-testid="stMarkdownContainer"] p,
+    [data-testid="stExpander"] details,
+    [data-testid="stExpander"] details > div {
+        color: #1a1a1a !important;
+        background-color: transparent !important;
+    }
+    [data-testid="stExpander"] svg {
+        fill: #1a1a1a !important;
+        stroke: #1a1a1a !important;
+    }
+
+    /* ========== FIX 2: CODE BLOCK — dark text on light beige ========== */
+    [data-testid="stCode"],
+    .stCode,
+    .stCode pre,
+    .stCode code,
+    pre, code,
+    [data-testid="stCode"] pre,
+    [data-testid="stCode"] code {
+        background-color: #ede8de !important;
+        color: #1a1a1a !important;
+    }
+    [data-testid="stCode"] button {
+        background-color: #e8e3d8 !important;
+        color: #1a1a1a !important;
+        border: 1px solid rgba(212, 175, 55, 0.4) !important;
+    }
+    [data-testid="stCode"] button:hover {
+        background-color: #D4AF37 !important;
+        color: #1a1a1a !important;
+    }
+
+    /* ========== FIX 3: SIDEBAR SIGNATURE — restored & contained ========== */
     .user-signature { 
         color: #FFFFFF !important; 
         font-family: 'Cormorant Garamond', serif;
@@ -210,11 +249,17 @@ st.markdown("""
         letter-spacing: 0.5px;
         white-space: normal;
         word-break: break-word;
+        overflow-wrap: break-word;
         padding: 0 15px;
         display: block;
+        width: 100%;
+        box-sizing: border-box;
+        max-width: 100%;
         transition: opacity 0.3s ease;
     }
-    .user-signature:hover { opacity: 0.9; }
+    .user-signature:hover { 
+        opacity: 0.9; 
+    }
  
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #F5F0E8; }
