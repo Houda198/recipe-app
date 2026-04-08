@@ -24,23 +24,32 @@ st.set_page_config(page_title="Maison SLIMANI", page_icon="🍳")
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;500;600;700&display=swap');
-    
+ 
+    /* FOND PRINCIPAL : Ivoire chaud au lieu du noir total */
     .stApp { 
-        background-color: #1a1a1a; 
-        background-image: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.03) 0%, transparent 50%);
+        background-color: #F5F0E8;
+        background-image: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
     }
-    .block-container { padding-top: 2rem; }
-    
-    /* 1. TITRE MAISON SLIMANI : Centré et Blanc */
+    .block-container { 
+        padding-top: 2rem;
+        background-color: #F5F0E8;
+    }
+ 
+    /* Texte du contenu principal en noir pour lisibilité sur fond clair */
+    .stMarkdown, .stMarkdown p, .stMarkdown li, .stMarkdown h1, .stMarkdown h2 { 
+        color: #1a1a1a !important; 
+    }
+ 
+    /* 1. TITRE MAISON SLIMANI */
     .signature-title { 
         font-family: 'Cinzel', serif; 
-        color: #FFFFFF !important; 
+        color: #1a1a1a !important; 
         text-align: center; 
         font-size: 3.2rem; 
         font-weight: 500; 
         letter-spacing: 8px; 
         margin-bottom: 8px;
-        text-shadow: 0 2px 20px rgba(212, 175, 55, 0.15);
+        text-shadow: 0 2px 20px rgba(212, 175, 55, 0.2);
         position: relative;
     }
     .signature-title::after {
@@ -51,8 +60,8 @@ st.markdown("""
         background: linear-gradient(90deg, transparent, #D4AF37, transparent);
         margin: 20px auto 0;
     }
-    
-    /* 2. SOUS-TITRE : Élégance raffinée */
+ 
+    /* 2. SOUS-TITRE */
     .subtitle { 
         text-align: center; 
         color: #D4AF37; 
@@ -64,13 +73,13 @@ st.markdown("""
         width: 100%;
         font-weight: 400;
         opacity: 0.9;
-        text-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
     }
-
+ 
+    /* SIDEBAR : reste noire */
     [data-testid="stSidebar"] { 
         background: linear-gradient(180deg, #1c1c1c 0%, #141414 100%) !important; 
         border-right: 1px solid rgba(212, 175, 55, 0.3);
-        box-shadow: 4px 0 30px rgba(0, 0, 0, 0.5);
+        box-shadow: 4px 0 30px rgba(0, 0, 0, 0.3);
     }
     .sidebar-logo-container { 
         text-align: center; 
@@ -87,16 +96,12 @@ st.markdown("""
         border: 1px solid rgba(212, 175, 55, 0.6); 
         background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
         letter-spacing: 4px;
-        box-shadow: 
-            0 4px 20px rgba(0, 0, 0, 0.4),
-            inset 0 1px 0 rgba(212, 175, 55, 0.1);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(212, 175, 55, 0.1);
         transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     .sidebar-logo:hover {
         border-color: #D4AF37;
-        box-shadow: 
-            0 8px 40px rgba(212, 175, 55, 0.15),
-            inset 0 1px 0 rgba(212, 175, 55, 0.2);
+        box-shadow: 0 8px 40px rgba(212, 175, 55, 0.15), inset 0 1px 0 rgba(212, 175, 55, 0.2);
         transform: translateY(-2px);
     }
     [data-testid="stSidebar"] label p { 
@@ -118,7 +123,8 @@ st.markdown("""
         background-color: #D4AF37 !important;
         box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
     }
-    
+ 
+    /* TITRES DE SECTION h3 */
     h3 { 
         color: #1a1a1a !important; 
         font-family: 'Cinzel', serif;
@@ -126,14 +132,15 @@ st.markdown("""
         font-weight: 500;
         border-left: 3px solid #D4AF37; 
         padding-left: 20px; 
-        background: linear-gradient(90deg, #fdfbf7 0%, #f8f6f0 100%); 
+        background: linear-gradient(90deg, #ede8de 0%, #e8e3d8 100%);
         padding-top: 12px; 
         padding-bottom: 12px; 
         margin-top: 30px !important;
         letter-spacing: 2px;
-        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
     }
-    
+ 
+    /* BOUTON */
     div.stButton > button { 
         background: linear-gradient(145deg, #1a1a1a, #2a2a2a); 
         color: #D4AF37 !important; 
@@ -146,7 +153,7 @@ st.markdown("""
         letter-spacing: 3px; 
         border-radius: 0; 
         transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         position: relative;
         overflow: hidden;
     }
@@ -160,30 +167,26 @@ st.markdown("""
         background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
         transition: left 0.6s ease;
     }
-    div.stButton > button:hover::before {
-        left: 100%;
-    }
+    div.stButton > button:hover::before { left: 100%; }
     div.stButton > button:hover { 
         border-color: #D4AF37; 
         color: #FFFFFF !important; 
         transform: translateY(-3px);
-        box-shadow: 
-            0 8px 30px rgba(0, 0, 0, 0.4),
-            0 0 20px rgba(212, 175, 55, 0.15);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(212, 175, 55, 0.15);
     }
-    
+ 
+    /* SIGNATURE DE FIN */
     .prestige-signature { 
-        color: #FFFFFF !important; 
+        color: #1a1a1a !important; 
         font-family: 'Cormorant Garamond', serif;
         font-weight: 500; 
         font-size: 1.15rem; 
         font-style: italic;
         margin-top: 50px; 
         letter-spacing: 2px; 
-        border-top: 1px solid rgba(212, 175, 55, 0.4); 
+        border-top: 1px solid rgba(212, 175, 55, 0.5); 
         padding-top: 30px; 
         text-align: center;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
     .prestige-sep { 
         color: #D4AF37; 
@@ -191,9 +194,10 @@ st.markdown("""
         font-weight: 300;
         opacity: 0.8;
     }
-    #MainMenu, header, footer {visibility: hidden;}
-
-    /* 3. SIGNATURE SIDEBAR : Élégance discrète */
+ 
+    #MainMenu, header, footer { visibility: hidden; }
+ 
+    /* SIGNATURE SIDEBAR */
     .user-signature { 
         color: #FFFFFF !important; 
         font-family: 'Cormorant Garamond', serif;
@@ -205,18 +209,12 @@ st.markdown("""
         white-space: nowrap;
         transition: opacity 0.3s ease;
     }
-    .user-signature:hover {
-        opacity: 0.9;
-    }
-    
+    .user-signature:hover { opacity: 0.9; }
+ 
     /* Scrollbar personnalisée */
-    ::-webkit-scrollbar {
-        width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-        background: #1a1a1a;
-    }
-    ::-webkit-scrollbar-thumb {
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #F5F0E8; }
+    ::-webkit-scrollbar-thumb { 
         background: linear-gradient(180deg, #D4AF37 0%, #a08930 100%);
         border-radius: 3px;
     }
