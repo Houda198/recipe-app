@@ -221,9 +221,9 @@ st.markdown("""
     .user-signature { 
         color: #FFFFFF !important; 
         font-family: 'Cormorant Garamond', serif;
-        font-size: 0.85rem; 
+        font-size: 0.95rem; 
         text-align: center; 
-        margin-top: 20px; 
+        margin-top: 10px; 
         opacity: 0.6;
         letter-spacing: 0.5px;
         white-space: nowrap;
@@ -304,7 +304,7 @@ with st.sidebar:
     t = TRANS[langue]
     fl = FILTER_LABELS[langue]
 
-    st.markdown("<br>" * 12, unsafe_allow_html=True) 
+    st.markdown("<br>" * 6, unsafe_allow_html=True) 
     
     st.markdown("<div class='sidebar-logo-container'><div class='sidebar-logo'>M.S</div></div>", unsafe_allow_html=True)
     
