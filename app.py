@@ -308,7 +308,7 @@ with st.sidebar:
     st.markdown("<div class='sidebar-logo-container'><div class='sidebar-logo'>M.S</div></div>", unsafe_allow_html=True)
     
     # AJOUT DE TA SIGNATURE ICI DANS LA SIDEBAR
-    st.markdown('<p class="user-signature">Conçu & Développé par Houda SLIMANI</p>', unsafe_allow_html=True)
+    st.markdown('<div class="user-signature">Conçu & Développé par Houda SLIMANI</div>', unsafe_allow_html=True)
 
 # --- TITRES D'ACCUEIL ---
 st.markdown(f"<div class='signature-title'>{t['main_title']}</div>", unsafe_allow_html=True)
