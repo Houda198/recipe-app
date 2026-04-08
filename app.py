@@ -217,13 +217,13 @@ st.markdown("""
         stroke: #1a1a1a !important;
     }
  
-    /* ✅ SIGNATURE SIDEBAR : version unique, sans doublon */
+    /*  SIGNATURE SIDEBAR : version unique, sans doublon */
     .user-signature { 
         color: #FFFFFF !important; 
         font-family: 'Cormorant Garamond', serif;
         font-size: 0.78rem; 
         text-align: center; 
-        margin-top: 60px; 
+        margin-top: 20px; 
         opacity: 0.6;
         letter-spacing: 0.5px;
         white-space: normal;
